@@ -1,0 +1,35 @@
+.product_img{ 
+    margin-top: 10px;  
+    height: 250px;
+    width: 250px; 
+    border-radius: 130px !important;   
+}
+.ant-card-bordered .ant-card-cover{
+    width: fit-content;
+    margin: auto;
+}
+.cardDetails{
+    width: 320px;
+    margin: auto;
+    margin-bottom: 20px;
+}
+.ant-card-meta-title{
+    text-align: center;
+    font-size: x-large;
+    font-family: cursive;
+}
+.block{
+    z-index:3;
+    margin-block: auto;
+    inline-size: auto;
+    margin-right: 57px;
+    position: fixed;
+    left: 1000px;
+    top: 18px;
+}
+
+.btn{
+    /* display: block; */
+    border-radius: 15px;
+}
+

@@ -1,0 +1,16 @@
+.title {
+    text-align: center;
+    margin-top: 15px;
+    font-family: cursive;
+}
+.column{
+    box-shadow: 0 0 10px rgb(0 0 0 / 30%);
+    height: fit-content;
+    margin-top: 25px;
+    padding: 10px 40px;
+    background: lavender;
+}
+.site-layout-background {
+    background: #40a9ff57 !important;
+
+}

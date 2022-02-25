@@ -1,0 +1,25 @@
+.row_class{
+    width: fit-content;
+    margin:auto !important;
+  }
+  .title{
+    text-align: center !important;
+    font-family: cursive;
+
+  }
+
+.col1{
+  box-shadow: 0 0 10px rgb(0 0 0 / 30%);
+   height: fit-content;
+    margin-top: 100px;
+    background: lavender;
+}
+.title{
+  text-align: initial;
+   margin-top: 15px
+}
+.btn{
+  width: fit-content;
+   margin: auto;
+    padding-bottom: 10px
+}

@@ -1,0 +1,57 @@
+@import '~antd/dist/antd.css';
+
+#components-layout-demo-fixed .logo {
+    float: left;
+    width: 120px;
+    height: 31px;
+    margin: 16px 24px 16px 0;
+    background: rgba(255, 255, 255, 0.2);
+  }
+  .site-layout .site-layout-background {
+    background: #e1e1e1;
+    padding: 50px;
+    min-height:calc(100vh - 64px);
+  }
+
+  .header {
+    position: fixed;
+    z-index: 3; 
+    width: 100%;
+  }
+
+  .content{
+    padding: 0px 50px;
+     margin-top: 64px;
+  }
+  .ant-menu{
+    padding: revert;
+    margin-top: -70px;
+  }
+
+  .image {
+    height: 50px;
+    margin-left: -45px;
+    margin-bottom: 5px;
+    width: auto;
+  }
+  .main_avatar{
+    right:150px;
+    top:10px;
+    position:absolute;
+    background : #182C61;
+    font-size:25px !important;
+  }
+  .dropdown{
+    right: 70px;
+    top: 0px;
+    position: absolute;
+  }
+
+  .dropdown_name {
+    color : white !important;
+    font-size :15px;
+    letter-spacing :1px
+  }
+  .ant-dropdown{
+    position: fixed;
+  }
