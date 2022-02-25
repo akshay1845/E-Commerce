@@ -55,3 +55,9 @@
   .ant-dropdown{
     position: fixed;
   }
+  .sale {
+    width:50px;
+    position:relative;
+    top:50%;
+    right:0;
+  }

@@ -7,7 +7,8 @@ import AddCart from './cart/AddCart';
 import './App.css';
 import { callApi } from './actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import {useAuth0} from '@auth0/auth0-react';
+import { useAuth0 } from '@auth0/auth0-react';
+import Sales from './Pages/sales/Sales';
 
 
 const { Item, Divider } = Menu
@@ -24,7 +25,7 @@ const Head = () => {
 
   const navigate = useNavigate()
 
-  const {isAuthenticated,logout,user} = useAuth0()
+  const { isAuthenticated, logout, user } = useAuth0()
 
 
   const get_item = () => {
@@ -52,7 +53,7 @@ const Head = () => {
   };
 
   const dropdown_menu = (
-    <Menu onClick={handleClick}>
+    <Menu style={{position: 'relative'}}onClick={handleClick}>
       <Item key="0">
         <NavLink to="/profile">Profile</NavLink>
       </Item>
@@ -74,19 +75,33 @@ const Head = () => {
 
         {
           isAuthenticated ?
-            <Item key="dash" icon={<HomeOutlined />} >
-              <NavLink to="/dash">Dashboard<br /></NavLink>
-            </Item> :
+            <>
+              <Item key="dash" icon={<HomeOutlined />} >
+                <NavLink to="/dash">Dashboard<br /></NavLink>
+              </Item>
+              {/* <Item key="sales">
+              <NavLink to="/sales"><Image className='sale' src = "sale.png" preview={false}></Image><br /></NavLink>
+            </Item> */}
+            </>
+            :
             <Item key="home" icon={<HomeOutlined />} >
               <NavLink to="/">Home<br /></NavLink>
             </Item>
         }
         <Item key="about" icon={<MailOutlined />}>
-          <NavLink to="/about">sales</NavLink>
+          <NavLink to="/about">About</NavLink>
         </Item>
         <Item key="contact" icon={<ContactsOutlined />}>
           <NavLink to="/contact">Contact</NavLink>
         </Item>
+        {
+          isAuthenticated ?
+            <Item key="sales" style={{position:"absolute",right:"10%"}}>
+              <NavLink to="/sales"><Image className='sale' src="./sale.png" preview={false}></Image><br /></NavLink>
+            </Item>
+            :
+            false
+        }
         {
           isAuthenticated ?
             // <Item key="logout" icon={<LogoutOutlined />} style={{ marginLeft: 'auto' }}>
@@ -110,9 +125,16 @@ const Head = () => {
         {
           isAuthenticated ?
             <Avatar size={40} className="main_avatar">{user?.nickname?.toUpperCase()?.[0]}</Avatar> :
-
             false
         }
+        {/* {
+          isAuthenticated ?
+            <Item key="sales">
+              <NavLink to="/sales"><Image className='sale' src="./sale.png" preview={false}></Image><br /></NavLink>
+            </Item>
+            :
+            false
+        } */}
       </Menu>
     </>
   )

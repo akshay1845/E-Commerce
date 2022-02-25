@@ -12,6 +12,7 @@ import Signup from './Pages/signup/Signup';
 import View from './Pages/dashboard/View';
 import ViewCart from '../src/cart/ViewCart'
 import Profile from './Pages/Profile/Profile';
+import Sales from './Pages/sales/Sales';
 
 
 const { Header, Content, Footer } = Layout;
@@ -36,6 +37,7 @@ const App = () => {
               <Route path="/signup" element={<Signup />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/dash" element={<Dash />} />
+              <Route path="/sales" element={<Sales />} />
               <Route path="/view/:id" element={<View />} />
               <Route path="/viewCart" element={<ViewCart />} />
               <Route path="/logout" />

@@ -6,20 +6,7 @@ import { useSelector } from 'react-redux'
 import '../cart/main.css'
 
 const AddCart = () => {
-    // const [counter,setCounter] = useState(0)
     const { cardData } = useSelector((state)=>state.CardItems);
-
-    // useEffect(() =>{
-    //     console.log("counter :", counter)
-    //     setcounter()
-    // },[cardData])
-
-    // const setcounter = ()=>{
-    //     console.log("cardData :", cardData)
-    //     const counter = cardData.filter((e) => e.qty>0)
-    //     console.log(counter)
-    //     setCounter(counter.length)
-    // }
     
     return (
         <>
