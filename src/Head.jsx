@@ -49,11 +49,11 @@ const Head = () => {
       logout()
       navigate('/')
     }
-    setCurrent(e.key);
+    setCurrent(e.key)
   };
 
   const dropdown_menu = (
-    <Menu style={{position: 'relative'}}onClick={handleClick}>
+    <Menu style={{position: 'relative'}} onClick={handleClick}>
       <Item key="0">
         <NavLink to="/profile">Profile</NavLink>
       </Item>
@@ -75,14 +75,9 @@ const Head = () => {
 
         {
           isAuthenticated ?
-            <>
               <Item key="dash" icon={<HomeOutlined />} >
                 <NavLink to="/dash">Dashboard<br /></NavLink>
               </Item>
-              {/* <Item key="sales">
-              <NavLink to="/sales"><Image className='sale' src = "sale.png" preview={false}></Image><br /></NavLink>
-            </Item> */}
-            </>
             :
             <Item key="home" icon={<HomeOutlined />} >
               <NavLink to="/">Home<br /></NavLink>
@@ -96,7 +91,7 @@ const Head = () => {
         </Item>
         {
           isAuthenticated ?
-            <Item key="sales" style={{position:"absolute",right:"10%"}}>
+            <Item style={{position:"absolute",right:"12%"}}>
               <NavLink to="/sales"><Image className='sale' src="./sale.png" preview={false}></Image><br /></NavLink>
             </Item>
             :
@@ -104,9 +99,6 @@ const Head = () => {
         }
         {
           isAuthenticated ?
-            // <Item key="logout" icon={<LogoutOutlined />} style={{ marginLeft: 'auto' }}>
-            //   Logout
-            // </Item> 
             <Dropdown className="dropdown" overlay={dropdown_menu} trigger={['click']}>
               <a className="ant-dropdown-link" className="dropdown_name" onClick={e => e.preventDefault()} >
                 {user?.nickname}<DownOutlined />
@@ -127,14 +119,6 @@ const Head = () => {
             <Avatar size={40} className="main_avatar">{user?.nickname?.toUpperCase()?.[0]}</Avatar> :
             false
         }
-        {/* {
-          isAuthenticated ?
-            <Item key="sales">
-              <NavLink to="/sales"><Image className='sale' src="./sale.png" preview={false}></Image><br /></NavLink>
-            </Item>
-            :
-            false
-        } */}
       </Menu>
     </>
   )

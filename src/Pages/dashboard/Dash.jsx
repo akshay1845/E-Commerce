@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Input, Button, InputNumber } from 'antd';
+import { Card, Input, Button, InputNumber,Skeleton } from 'antd';
 import { products } from './Data';
 import { Row, Col, Image } from 'antd';
 import { NavLink } from 'react-router-dom';
@@ -64,6 +64,7 @@ const Dash = (props) => {
 
   return (
     <>
+    
       {isAuthenticated && (
         <>
           {/* Search */}
