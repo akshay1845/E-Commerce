@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Card, Typography, Modal, Row, Col, Select, Table, TimePicker, Alert, message } from 'antd'
 import './sales.css'
+import {useDispatch, useSelector} from 'react-redux'
+import { sale } from '../../actions/actions'
 
 const { Option } = Select
 
 const Sales = () => {
   const [visible, setVisible] = useState(false)
-  const [display, setDisplay] = useState([])
 
   const [val, setVal] = useState({
     startDay: "",
@@ -14,6 +15,11 @@ const Sales = () => {
     endDay: "",
     endTime: "",
   })
+
+  const dispatch = useDispatch();
+  const display =  useSelector((state) => state.AddSale.addsale)
+  console.log(display)
+ 
 
   const day = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
@@ -38,8 +44,17 @@ const Sales = () => {
       dataIndex: 'endTime',
       key: 'endTime',
     },
+    { 
+      title: 'operation',
+        dataIndex: 'operation',
+        render: (_, record ) => 
+            <Button onClick={(e) => delete1(e)} type="danger">DELETE</Button>
+    }
 
   ];
+  const delete1 = (e) =>{
+    console.log("record" + e)
+  }
 
   const validation = () => {
 
@@ -93,26 +108,58 @@ const Sales = () => {
       //     setDisplay([...display, val])
       //   }
       // }
-      if(display.length){
+      console.log(display)
+      if (day?.findIndex((e) => e == val.startDay) > day?.findIndex((e) => e == val?.endDay)) {
+        message.error("your sale must end in particular week!!!")
+      }
+      else if (display.length) {
 
-        if(val.startDay == val.endDay && val.startTime >=val.endTime){
+        if (val?.startDay == val?.endDay && val?.startTime >= val?.endTime) {
           message.error("Not valid!!!")
         }
-        else if(day?.findIndex((e) => e == val?.startDay) < day?.findIndex((e) => e == val?.endDay)){
+        else if (day?.findIndex((e) => e == val.startDay) > day?.findIndex((e) => e == val?.endDay)) {
+          message.error("your sale must end in particular week!!! (HINT : before :- saturday 23)")
+        }
+        else {
           const a = display.filter((x) => {
-                return (
-                  val?.startDay == x?.endDay && val?.startTime < x?.endTime
-                  ||
-                  day?.findIndex((e) => e == x?.startDay) < day?.findIndex((e) => e == val?.startDay) && 
-                  day?.findIndex((e) => e == val?.startDay) < day?.findIndex((e) => e == x?.endDay) 
-                )
-              })
+            return (
+              x?.startDay == x?.endDay && x?.startTime >= x?.endTime
+              ||
+              val?.startDay == x?.endDay && val?.startTime < x?.endTime
+              ||
+              val?.endDay == x?.startDay && val?.endTime > x?.startTime
+              ||
+
+              day?.findIndex((e) => e == x?.startDay) < day?.findIndex((e) => e == val?.startDay) &&
+              day?.findIndex((e) => e == val?.startDay) < day?.findIndex((e) => e == x?.endDay)
+              ||
+              day?.findIndex((e) => e == x?.startDay) < day?.findIndex((e) => e == val?.endDay) &&
+              day?.findIndex((e) => e == val?.endDay) < day?.findIndex((e) => e == x?.endDay)
+              ||
+              day?.findIndex((e) => e == x?.startDay) <= day?.findIndex((e) => e == val?.startDay) && val?.startTime <= x?.endTime &&
+              day?.findIndex((e) => e == x?.endDay) >= day?.findIndex((e) => e == val?.startDay)
+              ||
+              day?.findIndex((e) => e == x?.startDay) >= day?.findIndex((e) => e == val?.startDay) && val?.startTime <= x?.endTime &&
+              day?.findIndex((e) => e == x?.endDay) <= day?.findIndex((e) => e == val?.startDay)
+
+            )
+          })
           console.log(a)
+          if (a.length) {
+            message.error("You've already a sale!!!")
+          }
+          else{
+            setVisible(false)
+            dispatch(sale(val))
+            // setDisplay(addsale)
+
+          }
         }
       }
       else {
         setVisible(false)
-        setDisplay([...display, val])
+        dispatch(sale(val))
+        // setDisplay(addsale)
       }
     }
     else {
@@ -131,6 +178,7 @@ const Sales = () => {
       </>
     )
   }
+  
   return (
     <>
       <Button type="primary"

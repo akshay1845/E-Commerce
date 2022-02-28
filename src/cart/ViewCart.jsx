@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Table, Tag, Space, Typography } from 'antd';
+import { Table, Tag, Space, Typography, Row, Col } from 'antd';
+
+
 
 const { Text } = Typography;
 
@@ -11,6 +13,36 @@ const ViewCart = () => {
   const [quantity, setQuantity] = useState(0)
 
   const item = useSelector((state) => state.CardItems.cardData);
+
+  const display = useSelector((state) => state.AddSale.addsale)
+  console.log(display)
+
+  const day = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] 
+  
+  const d = new Date()
+  const today = d.getDay()
+  const time = d.getHours()
+  console.log(day[today] + " " + time )
+
+  let saleStatus
+
+  if(display.length){
+    saleStatus = display.filter((ele) => {
+      return(
+        ele?.startDay == ele?.endDay && ele?.startDay == day[today] && ele?.startTime <= time && time < ele?.endTime
+        ||
+        ele?.startDay == day[today] && ele?.startTime <= time  
+        || 
+        ele?.endDay == day[today] && ele?.endTime >= time
+        ||
+        day?.findIndex((e) => e == ele?.startDay) < today && today < day?.findIndex((e) => e == ele?.endDay)
+        
+        
+      )
+      
+    })
+
+  }
 //Table Columns
   const columns = [
     {
@@ -41,7 +73,22 @@ const ViewCart = () => {
 
   ];
 //Table Data
-  const data = item.filter((e) => {
+let data
+if(saleStatus && saleStatus.length){
+    data = item.filter((e) => {
+    return e.qty > 0
+  }).map((val) => {
+    return ({
+      name: val.rname,
+      address: val.address,
+      price: `Actual Price : ${val.price}, Adding Discount: ${(val.price - (val.price * val.discount) / 100)}`,
+      qty: val.qty,
+      amount: (val.price - (val.price * val.discount) / 100 )* val.qty
+    })
+  })
+}
+else{
+   data = item.filter((e) => {
     return e.qty > 0
   }).map((val) => {
     return ({
@@ -52,6 +99,9 @@ const ViewCart = () => {
       amount: val.price * val.qty
     })
   })
+  
+}
+  
 
   //Total Amount
   let sum = 0
@@ -71,6 +121,17 @@ const ViewCart = () => {
 
   return (
     <>
+    {
+      saleStatus && saleStatus.length ? 
+      <>
+        <Row >
+          <Col style={{background: 'green',  margin:'auto',textAlign:"center"}} span={4} offset={6} >
+            <Text level={1}>SALE is Activated</Text>
+            </Col>
+       </Row>
+       <br />
+      </> : null
+    }
       <Table
         pagination={false}
         columns={columns}

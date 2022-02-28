@@ -2,6 +2,7 @@ import { products } from '../Pages/dashboard/Data'
 const intialState = {
     cardData : products,
 }
+
 const CardItems = (state = intialState, action) =>{
     switch(action.type){
         

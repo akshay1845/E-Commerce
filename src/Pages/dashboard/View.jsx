@@ -26,6 +26,7 @@ const View = () => {
     useEffect(() => {
         get_item_details()
     }, [id])
+    
 
     return (
         <>
@@ -35,6 +36,7 @@ const View = () => {
                         <Col span={2}>
                             <DemoBox value={50}>{<Image alt="example" src={data.imgdata} width={500} preview={false} />}</DemoBox>
                             <DemoBox value={120}>{data.rname}</DemoBox>
+                            <DemoBox value={120}>{data.discount}% on sale</DemoBox>
                         </Col>
                         <Col span={2}>
                             

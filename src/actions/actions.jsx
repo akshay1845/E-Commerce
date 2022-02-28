@@ -12,6 +12,13 @@ export const removeToCart = (id) => {
     }
 }
 
+export const sale = (data) =>{
+    return {
+        type : "ADD_SALE",
+        payload : data
+    }
+}
+
 export const callApi = () => {
     return async (dispatch) => {
         const res = await fetch('https://jsonplaceholder.typicode.com/users');
