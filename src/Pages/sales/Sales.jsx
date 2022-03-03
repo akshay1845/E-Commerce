@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Button, Card, Typography, Modal, Row, Col, Select, Table, TimePicker, Alert, message } from 'antd'
 import './sales.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { sale } from '../../actions/actions'
+import { sale, removeSale } from '../../actions/actions'
+import { useAuth0 } from '@auth0/auth0-react';
+
 
 const { Option } = Select
 
@@ -15,6 +17,9 @@ const Sales = () => {
     endDay: "",
     endTime: "",
   })
+
+  const { isAuthenticated } = useAuth0()
+
 
   const dispatch = useDispatch();
   const display = useSelector((state) => state.AddSale.addsale)
@@ -47,70 +52,21 @@ const Sales = () => {
     {
       title: 'operation',
       dataIndex: 'operation',
-      render: (_, record) => <Button onClick={(e) => delete1(e)} type="danger">DELETE</Button>
+      render: (_, record) => 
+      <Button onClick={() => delete1(record)} type="danger">DELETE</Button>
     }
 
   ];
   const delete1 = (e) => {
-    console.log("record" + e)
+    console.log("record" + JSON.stringify(e))
+    dispatch(removeSale(e))
   }
 
   const validation = () => {
 
     if (val.startDay && val.endDay && val.startTime && val.endTime) {
 
-      // if (val?.startDay === val?.endDay) {
-      //   if (val?.startTime >= val?.endTime) {
-      //     message.error("Enter Valid Range!!!")
-      //   }
-      //   else if (val?.startTime <= display?.[display?.length - 1]?.endTime) {
-      //     message.error("Youe time is conflicting!")
-      //   }
-      //   else {
-      //     setVisible(false)
-      //     setDisplay([...display, val])
-      //   }
-      // }
-
-      // else if (display.length) {
-      //   const a = display.filter((x) => {
-      //     return (
-      //       day?.findIndex((e) => e == x?.startDay) <= day?.findIndex((e) => e == val?.endDay) && x?.startTime <= val?.endTime &&
-      //       day?.findIndex((e) => e == val?.endDay) <= day?.findIndex((e) => e == x?.endDay)
-      //       ||
-      //       val?.endDay == x?.StartDay && x?.startTime <= val?.endTime
-
-      //     )
-      //   })
-      //   console.log(a)
-
-      //   const v = display.filter((x) => {
-
-      //     return (
-      //       day?.findIndex((e) => e == x?.startDay) <= day?.findIndex((e) => e == val?.startDay) && val?.startTime <= x?.endTime &&
-      //       day?.findIndex((e) => e == x?.endDay) >= day?.findIndex((e) => e == val?.startDay)
-      //       ||
-      //       day?.findIndex((e) => e == x?.startDay) >= day?.findIndex((e) => e == val?.startDay) && val?.startTime <= x?.endTime &&
-      //       day?.findIndex((e) => e == x?.endDay) <= day?.findIndex((e) => e == val?.startDay)
-      //     )
-      //   })
-      //   console.log("v = " + v)
-
-      //   if (a.length) {
-      //     message.error("Your time is conflicting!")
-      //   }
-      //   else if (v.length) {
-      //     message.error("You've already sale in this region")
-      //   }
-      //   else {
-      //     setVisible(false)
-      //     setDisplay([...display, val])
-      //   }
-      // }
-      // if (day?.findIndex((e) => e == val.startDay) > day?.findIndex((e) => e == val?.endDay)) {
-      //   message.error("your sale must end in particular week!!!")
-      // }
-      if(display.length) {
+      if(display && display.length) {
 
         if (val?.startDay == val?.endDay && val?.startTime >= val?.endTime) {
           message.error("Not valid!!!")
@@ -121,14 +77,14 @@ const Sales = () => {
         else {
           const a = display.filter((x) => {
             return (
-              x?.startDay == x?.endDay && x?.startTime >= x?.endTime
+              x?.startDay == x?.endDay && x?.startTime >= x?.endTime 
               ||
               val?.startDay == x?.endDay && val?.startTime < x?.endTime
               ||
               val?.endDay == x?.startDay && val?.endTime > x?.startTime
               ||
 
-              day?.findIndex((e)=> e == val?.startDay) < day?.findIndex((e) => e == x?.startDay) && day?.findIndex((e) => e == x?.endDay) && day?.findIndex((e) => e == val?.endDay)
+              day?.findIndex((e)=> e == val?.startDay) < day?.findIndex((e) => e == x?.startDay) && day?.findIndex((e) => e == x?.endDay) < day?.findIndex((e) => e == val?.endDay)
               ||
               // day?.findIndex((e) => )
               day?.findIndex((e) => e == x?.startDay) < day?.findIndex((e) => e == val?.startDay) &&
@@ -136,16 +92,16 @@ const Sales = () => {
               ||
               day?.findIndex((e) => e == x?.startDay) < day?.findIndex((e) => e == val?.endDay) &&
               day?.findIndex((e) => e == val?.endDay) < day?.findIndex((e) => e == x?.endDay)
-              ||
-              day?.findIndex((e) => e == x?.startDay) <= day?.findIndex((e) => e == val?.startDay) && val?.startTime <= x?.endTime &&
-              day?.findIndex((e) => e == x?.endDay) >= day?.findIndex((e) => e == val?.startDay)
-              ||
-              day?.findIndex((e) => e == x?.startDay) >= day?.findIndex((e) => e == val?.startDay) && val?.startTime <= x?.endTime &&
-              day?.findIndex((e) => e == x?.endDay) <= day?.findIndex((e) => e == val?.startDay)
+              // ||
+              // // day?.findIndex((e) => e == x?.startDay) <= day?.findIndex((e) => e == val?.startDay) && val?.startTime <= x?.endTime &&
+              // // day?.findIndex((e) => e == x?.endDay) >= day?.findIndex((e) => e == val?.startDay)
+              // // ||
+              // day?.findIndex((e) => e == x?.startDay) >= day?.findIndex((e) => e == val?.startDay) && val?.startTime <= x?.endTime &&
+              // day?.findIndex((e) => e == x?.endDay) <= day?.findIndex((e) => e == val?.startDay)
 
             )
           })
-          console.log(a)
+          console.log("inside validation" + JSON.stringify(a))
           if (a.length) {
             message.error("You've already a sale!!!")
           }
@@ -181,7 +137,10 @@ const Sales = () => {
 
   return (
     <>
-      <Button type="primary"
+    {
+      isAuthenticated && (
+      <>
+        <Button type="primary"
         className='btn1' onClick={() => {
           setVisible(true)
         }}>
@@ -230,6 +189,9 @@ const Sales = () => {
           </Col>
         </Row>
       </Modal>
+      </>)  
+    }
+      
     </>
   )
 }

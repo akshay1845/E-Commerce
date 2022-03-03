@@ -57,7 +57,7 @@
   }
   .sale {
     width:50px;
-    position:relative;
-    top:50%;
-    right:0;
+    position:fixed;
+    top:8px;
+    right:12%;
   }

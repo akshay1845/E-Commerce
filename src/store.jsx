@@ -5,7 +5,7 @@ import ReduxThunk from 'redux-thunk'
 
 const store = createStore(
     rootReducer,
-    applyMiddleware(ReduxThunk)
+    applyMiddleware(ReduxThunk) 
     )
 
 export default store

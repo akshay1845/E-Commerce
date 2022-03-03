@@ -36,8 +36,6 @@ const ViewCart = () => {
         ele?.endDay == day[today] && ele?.endTime >= time
         ||
         day?.findIndex((e) => e == ele?.startDay) < today && today < day?.findIndex((e) => e == ele?.endDay)
-        
-        
       )
       
     })
@@ -125,8 +123,8 @@ else{
       saleStatus && saleStatus.length ? 
       <>
         <Row >
-          <Col style={{background: 'green',  margin:'auto',textAlign:"center"}} span={4} offset={6} >
-            <Text level={1}>SALE is Activated</Text>
+          <Col style={{background: 'green',  margin:'auto',textAlign:"center", borderRadius:15}} span={4} offset={6} >
+            <Text style={{color:'white', fontSize:30}} level={1}>Sale is Activated</Text>
             </Col>
        </Row>
        <br />

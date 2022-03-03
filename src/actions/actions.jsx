@@ -1,4 +1,4 @@
-export const addToCart = (id) => {
+    export const addToCart = (id) => {
     return {
         type : "ADD_TO_CART",
         payload : id,
@@ -15,6 +15,12 @@ export const removeToCart = (id) => {
 export const sale = (data) =>{
     return {
         type : "ADD_SALE",
+        payload : data
+    }
+}
+export const removeSale = (data) =>{
+    return {
+        type : "REMOVE_SALE",
         payload : data
     }
 }

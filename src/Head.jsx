@@ -90,12 +90,12 @@ const Head = () => {
           <NavLink to="/contact">Contact</NavLink>
         </Item>
         {
-          isAuthenticated ?
-            <Item style={{position:"absolute",right:"12%"}}>
-              <NavLink to="/sales"><Image className='sale' src="./sale.png" preview={false}></Image><br /></NavLink>
-            </Item>
-            :
-            false
+          // isAuthenticated ?
+          //   // <Item style={{position:"absolute",right:"12%"}}>
+          //     <NavLink to="/sales"><Image className='sale' src="./sale.png" preview={false}></Image><br /></NavLink>
+          //   // {/* </Item> */}
+          //   :
+          //   false
         }
         {
           isAuthenticated ?
@@ -120,6 +120,14 @@ const Head = () => {
             false
         }
       </Menu>
+      {
+          isAuthenticated ?
+            // <Item style={{position:"absolute",right:"12%"}}>
+              <NavLink to="/sales"><Image className='sale' src="./sale.png" preview={false}></Image><br /></NavLink>
+            // {/* </Item> */}
+            :
+            false
+        }
     </>
   )
 }
